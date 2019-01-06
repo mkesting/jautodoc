@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toc label="JAutodoc" topic="doc/help_main.html">
+   <topic href="doc/help_main.html" label="Features">
+   </topic>
+   <topic href="doc/help_main.html#usage" label="Usage">
+   </topic>
+   <topic href="doc/help_templates.html" label="Templates">
+   </topic>
+   <topic href="doc/help_ant.html" label="Ant Task">
+   </topic>
+   <topic href="doc/help_main.html#search" label="Task Search">
+   </topic>
+   <topic href="doc/help_main.html#changes" label="Changes">
+   </topic>
+   <topic href="doc/help_main.html#contact" label="Contact">
+   </topic>
+</toc>

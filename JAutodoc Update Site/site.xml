@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="JAutodoc" url="http://jautodoc.sourceforge.net/update/">
+      JAutodoc Update Site
+   </description>
+   <feature url="features/net.sf.jautodoc.feature_1.5.0.jar" id="net.sf.jautodoc.feature" version="1.5.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.6.0.jar" id="net.sf.jautodoc.feature" version="1.6.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.7.0.jar" id="net.sf.jautodoc.feature" version="1.7.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.8.0.jar" id="net.sf.jautodoc.feature" version="1.8.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.9.0.jar" id="net.sf.jautodoc.feature" version="1.9.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.10.0.jar" id="net.sf.jautodoc.feature" version="1.10.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.11.0.jar" id="net.sf.jautodoc.feature" version="1.11.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.11.1.jar" id="net.sf.jautodoc.feature" version="1.11.1">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.12.0.jar" id="net.sf.jautodoc.feature" version="1.12.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.13.0.jar" id="net.sf.jautodoc.feature" version="1.13.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <feature url="features/net.sf.jautodoc.feature_1.14.0.jar" id="net.sf.jautodoc.feature" version="1.14.0">
+      <category name="JAutodoc"/>
+   </feature>
+   <archive path="plugins/net.sf.jautodoc_1.5.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.5.0/net.sf.jautodoc_1.5.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.5.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.3.0/net.sf.jautodoc.velocity_1.5.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.6.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.6.0/net.sf.jautodoc_1.6.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.6.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.6.0/net.sf.jautodoc.velocity_1.6.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.7.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.7.0/net.sf.jautodoc_1.7.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.7.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.7.0/net.sf.jautodoc.velocity_1.7.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.8.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.8.0/net.sf.jautodoc_1.8.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.8.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.8.0/net.sf.jautodoc.velocity_1.8.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.9.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.9.0/net.sf.jautodoc_1.9.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.9.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.9.0/net.sf.jautodoc.velocity_1.9.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.10.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.10.0/net.sf.jautodoc_1.10.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.10.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.10.0/net.sf.jautodoc.velocity_1.10.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.11.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.11.0/net.sf.jautodoc_1.11.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.11.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.11.0/net.sf.jautodoc.velocity_1.11.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.11.1.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.11.1/net.sf.jautodoc_1.11.1.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.11.1.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.11.1/net.sf.jautodoc.velocity_1.11.1.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.12.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.12.0/net.sf.jautodoc_1.12.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.12.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.12.0/net.sf.jautodoc.velocity_1.12.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.13.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.13.0/net.sf.jautodoc_1.13.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.13.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.13.0/net.sf.jautodoc.velocity_1.13.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc_1.14.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.14.0/net.sf.jautodoc_1.14.0.jar/download"/>
+   <archive path="plugins/net.sf.jautodoc.velocity_1.14.0.jar" url="http://sourceforge.net/projects/jautodoc/files/updatesite/1.14.0/net.sf.jautodoc.velocity_1.14.0.jar/download"/>
+   <category-def name="JAutodoc" label="JAutodoc"/>
+</site>

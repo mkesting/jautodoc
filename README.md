@@ -1,2 +1,2 @@
-# jautodoc
-JAutodoc Eclipse Plugin
+# JAutodoc Eclipse Plugin
+See [JAutodoc](https://marketplace.eclipse.org/content/jautodoc)
