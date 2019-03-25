@@ -1,0 +1,38 @@
+
+ +   "parse()" is document as "Parses the." -- prefix matches should probably fail if there's nothing after the prefix.
+
+ -   "setup()" is documented as "Sets the up." :-) -- camel case should be respected as a boundary for prefix matches.
+
+ #create Template:   The field "boolean resolveTypes" is documented as "The resolve types." -- should be "Whether or not to resolve types." or something -- I don't know the best way to make documentations of Booleans generic, but the status quo is not ideal.
+
+ #edit Template boolean Getter:    The method parameter in "void setIsAnnotation(boolean isAnnotation)" is documented as "@param isAnnotation   the new checks if is annotation" -- should be something like "@param isAnnotation   true if is annotation"
+
+    The method parameter in "void addNewClass(boolean isExternalClass)" is documented as "@param isExternalClass  the is external class" -- should be something like "@param isExternalClass  true if is external class"
+
+    The method "private static Set<ClassInfo> filterClassInfo(final Collection<ClassInfo> classes, final ScanSpec scanSpec, final boolean strictWhitelist, final ClassType... classTypes)" had its return type documented as "@return the sets the" for some reason
+
+    "public List<URL> getURLs()" was commented as "Get the UR ls."
+
+    "@Override public int compareTo(final ClassInfo o) { return this.name.compareTo(o.name); }" gets documented as "@param o   the o   @return   the int" -- this should probably be special cased. So should "hashcode()" -- again the return type is simply "the int".
+
+    An "equals(Object obj)" method gets documented as "@param obj   the obj   @return    true, if successful" -- this should probably be special cased.
+
+    "throws IllegalArgumentException" is documented as "@throws IllegalArgumentException  the illegal argument exception" -- which is not very helpful. Probably "@throws IllegalArgumentException  if there is an illegal argument problem" would be better ("an" should be "a" for "RuntimeException" etc.)
+
+    If a method starts with "get", then a "@return" tag is added, even if the return type is "void", which produces a Javdoc warning in the IDE. (Sometimes methods whose names start with "get" take an "out parameter" rather than return a value -- they are not getter methods.)
+
+    "@param" does not have a period ('.') added after the Javadoc comment text, but "@throws" and the main comment do have a period appended.
+
+    In general, it would be nice to have the option of normalizing Javadoc capitalization and punctuation (e.g. capitalizing the first letter of all entries, and appending a period at the end of all entries, even if the Javadoc comment is already complete).
+
+    getTypeStr() could be documented as "Gets the type string" -- i.e. there should be suffix match options, not just prefix matches.
+
+    It would be nice to have infix matches too, e.g. "Map<String, Integer> nameToCount" -> "The map from name to count." rather than "The name to count."
+
+    For Javadoc comments that have a @return field but do not yet have a main comment, the comment should be generated from the @return field, by putting "Returns " then the content of the @return comment (with the first letter lowercased). Conversely, if there is already a main comment, and the main comment starts with "Get" or "Gets" or "Return" or "Returns" or "Read" or "Reads", and the "@return" entry is being added by JAutodoc, it should pull text from the main comment text, not the method name.
+
+    There should be an option to capitalize (or not) the first letter of added comments, e.g. "@param log   the log" vs. "@param log   The log"
+
+    The comments should be run through the code formatter after generation (I think a few of them were not formatted quite correctly according to my current formatter settings)
+
+    Also, any chance you would consider moving the library to GitHub? It would be easier to file bugs that way...
