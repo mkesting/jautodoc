@@ -1,5 +1,12 @@
 Changes for JAutodoc
 
+* 2019-05-30 Version 1.14.2
+      o Bugfix for Ant Task
+      o Bugfix for interface methods
+
+* 2019-03-25 Version 1.14.1
+      o Bugfix for missing JAXB in Java >= 11
+
 * 2016-06-19 Version 1.14.0
       o Improvements on name splitting with support for digits
       o Bugfix for import all preferences
