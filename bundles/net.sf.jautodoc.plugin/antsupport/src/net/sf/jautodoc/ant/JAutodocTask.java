@@ -209,13 +209,7 @@ public class JAutodocTask extends Task {
 
 		log("Creating Javadoc...");
 
-		Display display = null;
 		try {
-		    // hack for headless JDT plugin >= 4.4
-		    if (Display.getCurrent() == null) {
-	            display = PlatformUI.createDisplay();
-	        }
-
 			ICompilationUnit[] compUnits = findCompilationUnits();
 			if (compUnits.length == 0) {
 				return;
@@ -233,10 +227,6 @@ public class JAutodocTask extends Task {
 			log("Done.");
 		} catch (Throwable e) {
 			throw new BuildException(e);
-		} finally {
-            if (display != null) {
-                display.dispose();
-            }
         }
 	}
 
@@ -585,10 +575,10 @@ public class JAutodocTask extends Task {
 	private static class DummyProject extends Project {
 
 		public DummyProject() {
-			setBasedir("D:/Work/workspaces/runtime-plugindev/Test");
+			setBasedir("D:/Work/workspaces/runtime-EclipseApplication/TestAntTask");
 		}
 		public String getName() {
-			return "DummyProject";
+			return "TestAntTask";
 		}
 
 		public void log(String message) {
