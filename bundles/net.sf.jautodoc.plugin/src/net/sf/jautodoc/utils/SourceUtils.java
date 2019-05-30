@@ -142,6 +142,9 @@ public final class SourceUtils {
     }
 
     public static boolean isMatchingMethod(final IMethod method, final IMemberFilter filter) throws JavaModelException {
+        if (method.getDeclaringType().isInterface() && Flags.isPackageDefault(method.getFlags())) {
+            return filter.isIncludeMethods() && filter.isIncludePublic();
+        }
         return filter.isIncludeMethods() && hasMatchingVisibility(method, filter)
                 && matchesGetterSetterFilter(method, filter) && matchesOverridingFilter(method, filter);
     }
