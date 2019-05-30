@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="JAutodoc/lib/jautodoc-ant.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/JAutodoc/antsupport/antsupport.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <jar path="jautodoc/bundles/net.sf.jautodoc.plugin/lib/jautodoc-ant.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/net.sf.jautodoc.plugin/antsupport/antsupport.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -11,6 +11,6 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <javaElement handleIdentifier="=JAutodoc/antsupport\/src"/>
+        <javaElement handleIdentifier="=net.sf.jautodoc.plugin/antsupport\/src"/>
     </selectedElements>
 </jardesc>
