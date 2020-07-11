@@ -2,7 +2,7 @@
 <feature
       id="net.sf.jautodoc.feature"
       label="JAutodoc"
-      version="1.14.2.qualifier"
+      version="1.15.0.qualifier"
       provider-name="Martin Kesting"
       plugin="net.sf.jautodoc">
 
