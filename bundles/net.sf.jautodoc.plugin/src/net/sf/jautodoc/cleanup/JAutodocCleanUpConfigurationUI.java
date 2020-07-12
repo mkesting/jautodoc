@@ -30,6 +30,7 @@ public class JAutodocCleanUpConfigurationUI implements ICleanUpConfigurationUI {
 
     private Button addHeaderButton;
     private Button replaceHeaderButton;
+    private Button cleanupJavadocButton;
     private Label warnReplaceHeaderImage;
     private Label warnReplaceHeaderLabel;
 
@@ -45,26 +46,49 @@ public class JAutodocCleanUpConfigurationUI implements ICleanUpConfigurationUI {
     /** {@inheritDoc} */
     @Override
     public Composite createContents(final Composite parent) {
-        return createHeaderGroup(parent);
+        final Composite composite = new Composite(parent, SWT.NONE);
+        composite.setFont(parent.getFont());
+
+        final GridLayout layout = new GridLayout(1, false);
+        layout.marginHeight = 0;
+        composite.setLayout(layout);
+        composite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        createHeaderGroup(composite);
+        createJavadocGroup(composite);
+
+        updateWidgetStates();
+
+        return composite;
     }
 
     /** {@inheritDoc} */
     @Override
     public int getCleanUpCount() {
-        return 1;
+        return 2;
     }
 
     /** {@inheritDoc} */
     @Override
     public int getSelectedCleanUpCount() {
-        return options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION) ? 1 : 0;
+        int count = options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION) ? 1 : 0;
+        return options.isEnabled(Constants.CLEANUP_JAVADOC_OPTION) ? ++count : count;
     }
 
     /** {@inheritDoc} */
     @Override
     public String getPreview() {
-        return options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION) ?
-                ConfigurationManager.getCurrentConfiguration().getHeaderText() : "";
+        StringBuilder buffer = new StringBuilder();
+
+        buffer.append(options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION)
+                ? ConfigurationManager.getCurrentConfiguration().getHeaderText() + Constants.LINE_SEPARATOR
+                : "");
+
+        buffer.append(options.isEnabled(Constants.CLEANUP_JAVADOC_OPTION)
+                ? Constants.CLEANUP_PREVIEW_JAVADOC_ENABLED
+                : Constants.CLEANUP_PREVIEW_JAVADOC_DISABLED);
+
+        return buffer.toString();
     }
 
     private Composite createHeaderGroup(final Composite parent) {
@@ -132,9 +156,31 @@ public class JAutodocCleanUpConfigurationUI implements ICleanUpConfigurationUI {
         hintLabelGridData.horizontalSpan = 2;
         hintLabel.setLayoutData(hintLabelGridData);
 
-        updateWidgetStates();
-
         return headerGroup;
+    }
+
+    private Composite createJavadocGroup(final Composite parent) {
+        final Group javadocGroup = new Group(parent, SWT.NONE);
+        javadocGroup.setFont(parent.getFont());
+        javadocGroup.setText("Javadoc");
+
+        final GridLayout layout = new GridLayout(2, false);
+        layout.marginHeight = 10;
+        javadocGroup.setLayout(layout);
+        javadocGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        cleanupJavadocButton = new Button(javadocGroup, SWT.CHECK);
+        cleanupJavadocButton.setFont(parent.getFont());
+        cleanupJavadocButton.setText("Cleanup Javadoc");
+        cleanupJavadocButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(final SelectionEvent event) {
+                options.setOption(Constants.CLEANUP_JAVADOC_OPTION,
+                        cleanupJavadocButton.getSelection() ? CleanUpOptions.TRUE : CleanUpOptions.FALSE);
+                updateWidgetStates();
+            }
+        });
+
+        return javadocGroup;
     }
 
     private void updateWidgetStates() {
@@ -142,6 +188,8 @@ public class JAutodocCleanUpConfigurationUI implements ICleanUpConfigurationUI {
 
         replaceHeaderButton.setSelection(options.isEnabled(Constants.CLEANUP_REP_HEADER_OPTION));
         replaceHeaderButton.setEnabled(options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION));
+
+        cleanupJavadocButton.setSelection(options.isEnabled(Constants.CLEANUP_JAVADOC_OPTION));
 
         warnReplaceHeaderImage.setEnabled(options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION)
                 && options.isEnabled(Constants.CLEANUP_REP_HEADER_OPTION));

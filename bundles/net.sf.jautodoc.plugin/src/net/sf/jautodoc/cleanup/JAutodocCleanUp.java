@@ -10,6 +10,9 @@ package net.sf.jautodoc.cleanup;
 import net.sf.jautodoc.JAutodocPlugin;
 import net.sf.jautodoc.preferences.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -38,11 +41,19 @@ public class JAutodocCleanUp implements ICleanUp {
     /** {@inheritDoc} */
     @Override
     public String[] getStepDescriptions() {
-        return options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION) ?
-                (options.isEnabled(Constants.CLEANUP_REP_HEADER_OPTION) ?
-                  new String[] { Constants.CLEANUP_REP_HEADER_STEP_LABEL }
-                : new String[] { Constants.CLEANUP_ADD_HEADER_STEP_LABEL })
-                : new String[0];
+        List<String> descriptions = new ArrayList<>(2);
+
+        if (options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION)) {
+            descriptions.add(options.isEnabled(Constants.CLEANUP_REP_HEADER_OPTION)
+                    ? Constants.CLEANUP_REP_HEADER_STEP_LABEL
+                    : Constants.CLEANUP_ADD_HEADER_STEP_LABEL);
+        }
+
+        if (options.isEnabled(Constants.CLEANUP_JAVADOC_OPTION)) {
+            descriptions.add(Constants.CLEANUP_JAVADOC_STEP_LABEL);
+        }
+
+        return descriptions.toArray(new String[descriptions.size()]);
     }
 
     /** {@inheritDoc} */
@@ -61,11 +72,15 @@ public class JAutodocCleanUp implements ICleanUp {
     /** {@inheritDoc} */
     @Override
     public ICleanUpFix createFix(final CleanUpContext context) throws CoreException {
-        if (options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION)) {
+        if (options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION)
+                || options.isEnabled(Constants.CLEANUP_JAVADOC_OPTION)) {
 
             final ICompilationUnit compUnit = context.getCompilationUnit();
             try {
-                return AddHeaderCleanUpFix.createCleanUp(compUnit, options.isEnabled(Constants.CLEANUP_REP_HEADER_OPTION));
+                return new JAutodocCleanUpFix(compUnit,
+                        options.isEnabled(Constants.CLEANUP_ADD_HEADER_OPTION),
+                        options.isEnabled(Constants.CLEANUP_REP_HEADER_OPTION),
+                        options.isEnabled(Constants.CLEANUP_JAVADOC_OPTION));
             } catch (Exception e) {
                 JAutodocPlugin.getDefault().handleException(compUnit, e);
             }

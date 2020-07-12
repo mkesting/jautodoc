@@ -76,6 +76,7 @@ public interface Constants {
 
     public static final String PROJECT_SPECIFIC = "project_specific_settings";
 
+    public static final String CLEANUP_JAVADOC_OPTION    = "jautodoc.cleanup.javadoc";
     public static final String CLEANUP_ADD_HEADER_OPTION = "jautodoc.cleanup.add_header";
     public static final String CLEANUP_REP_HEADER_OPTION = "jautodoc.cleanup.replace_header";
 
@@ -316,8 +317,55 @@ public interface Constants {
     // labels for cleanup/save actions
     // --------------------------------
 
+    public static final String CLEANUP_JAVADOC_STEP_LABEL    = PreferenceMessages.getString("cleanup.label.javadoc_step"); //$NON-NLS-1$
     public static final String CLEANUP_ADD_HEADER_STEP_LABEL = PreferenceMessages.getString("cleanup.label.add_header_step"); //$NON-NLS-1$
     public static final String CLEANUP_REP_HEADER_STEP_LABEL = PreferenceMessages.getString("cleanup.label.replace_header_step"); //$NON-NLS-1$
     public static final String CLEANUP_ADD_HEADER_HINT_LABEL = PreferenceMessages.getString("cleanup.label.add_header_hint"); //$NON-NLS-1$
     public static final String CLEANUP_REP_HEADER_WARN_LABEL = PreferenceMessages.getString("cleanup.label.replace_header_warn"); //$NON-NLS-1$
+
+    public static final String CLEANUP_PREVIEW_JAVADOC_DISABLED =
+        "package net.sf.jautodoc.example;" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "public class Example {" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "    private int numberOfQuestions;" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "    public int getNumberOfQuestions() {" + LINE_SEPARATOR +
+        "        return numberOfQuestions;" + LINE_SEPARATOR +
+        "    }" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "    public void setNumberOfQuestions(int numberOfQuestions) {" + LINE_SEPARATOR +
+        "        this.numberOfQuestions = numberOfQuestions;" + LINE_SEPARATOR +
+        "    }" + LINE_SEPARATOR +
+        "}";
+
+    public static final String CLEANUP_PREVIEW_JAVADOC_ENABLED =
+        "package net.sf.jautodoc.example;" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "/**" + LINE_SEPARATOR +
+        " * The Example class." + LINE_SEPARATOR +
+        " */" + LINE_SEPARATOR +
+        "public class Example {" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "    /** The number of questions. */" + LINE_SEPARATOR +
+        "    private int numberOfQuestions;" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "    /**" + LINE_SEPARATOR +
+        "     * Gets the number of questions." + LINE_SEPARATOR +
+        "     *" + LINE_SEPARATOR +
+        "     * @return the number of questions" + LINE_SEPARATOR +
+        "     */" + LINE_SEPARATOR +
+        "    public int getNumberOfQuestions() {" + LINE_SEPARATOR +
+        "        return numberOfQuestions;" + LINE_SEPARATOR +
+        "    }" + LINE_SEPARATOR +
+        LINE_SEPARATOR +
+        "    /**" + LINE_SEPARATOR +
+        "     * Sets the number of questions." + LINE_SEPARATOR +
+        "     *" + LINE_SEPARATOR +
+        "     * @param numberOfQuestions the new number of questions" + LINE_SEPARATOR +
+        "     */" + LINE_SEPARATOR +
+        "    public void setNumberOfQuestions(int numberOfQuestions) {" + LINE_SEPARATOR +
+        "        this.numberOfQuestions = numberOfQuestions;" + LINE_SEPARATOR +
+        "    }" + LINE_SEPARATOR +
+        "}";
 }
