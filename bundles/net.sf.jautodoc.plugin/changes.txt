@@ -1,5 +1,9 @@
 Changes for JAutodoc
 
+* 2020-07-12 Version 1.15.0
+      o Clean Up and Save Action for Javadoc
+      o Use field comments on constructor parameters
+
 * 2019-05-30 Version 1.14.2
       o Bugfix for Ant Task
       o Bugfix for interface methods
