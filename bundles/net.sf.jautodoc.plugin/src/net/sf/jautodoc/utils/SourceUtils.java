@@ -204,12 +204,12 @@ public final class SourceUtils {
         if (!SourceUtils.isGetterSetter(method, fieldNameSb)) {
             return null;
         }
+        return getField(method.getDeclaringType(), fieldNameSb.toString());
+    }
 
-        final String fieldName = fieldNameSb.toString();
-        final IType declaringType = method.getDeclaringType();
-
-        for (final String prefix : getFieldPrefixes(method.getJavaProject())) {
-            for (final String suffix : getFieldSuffixes(method.getJavaProject())) {
+    public static IField getField(final IType declaringType, final String fieldName) throws JavaModelException {
+        for (final String prefix : getFieldPrefixes(declaringType.getJavaProject())) {
+            for (final String suffix : getFieldSuffixes(declaringType.getJavaProject())) {
                 final IField field = declaringType.getField(StringUtils.composeName(prefix, fieldName, suffix));
                 if (field != null && field.exists()) {
                     return field;

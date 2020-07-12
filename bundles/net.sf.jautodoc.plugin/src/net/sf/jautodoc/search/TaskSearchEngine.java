@@ -223,7 +223,7 @@ public class TaskSearchEngine extends AbstractSourceProcessor {
         if (isEmpty(generatedJavadoc)) {
             final JavadocInfo emptyJdi = new JavadocInfo();
             final JavadocInfo generatedJdi = javadocCreator.applyTemplate(method, emptyJdi);
-            generatedJavadoc = javadocCreator.createJavadoc(method, "", "\n", generatedJdi);
+            generatedJavadoc = javadocCreator.createJavadoc(method, "", "\n", generatedJdi, document, commentScanner);
         }
         return generatedJavadoc;
     }

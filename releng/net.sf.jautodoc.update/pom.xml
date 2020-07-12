@@ -9,11 +9,49 @@
 	<parent>
 		<groupId>net.sf.jautodoc</groupId>
 		<artifactId>net.sf.jautodoc.releng</artifactId>
-		<version>1.14.2</version>
+		<version>1.15.0</version>
 	</parent>
 
 	<properties>
 		<!-- Do not skip the deployment here -->
 		<maven.deploy.skip>false</maven.deploy.skip>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>pushToBintray</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<groupId>org.codehaus.mojo</groupId>
+						<executions>
+							<execution>
+								<id>runPushToBintray</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>bash</executable>
+									<arguments>
+										<argument>pushToBintray.sh</argument>
+										<argument>${BINTRAY_USER}</argument>
+										<argument>${BINTRAY_API_KEY}</argument>
+										<argument>${BINTRAY_OWNER}</argument>
+										<argument>${BINTRAY_REPO}</argument>
+										<argument>${BINTRAY_PACKAGE}</argument>
+										<argument>${BINTRAY_VERSION}</argument>
+										<argument>${BINTRAY_PUBLISH}</argument>
+										<argument>target/repository</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

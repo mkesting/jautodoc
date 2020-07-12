@@ -220,7 +220,8 @@ public class SourceManipulator extends AbstractSourceProcessor {
                     if (config.isCreateDummyComment()) {
                         jdi = javadocCreator.applyTemplate(member, jdi);
                     }
-                    newJavadoc = javadocCreator.createJavadoc((IMethod) member, indent, lineDelimiter, jdi);
+                    newJavadoc = javadocCreator.createJavadoc((IMethod) member, indent, lineDelimiter, jdi, document,
+                            commentScanner);
                 }
             }
         }

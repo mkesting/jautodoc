@@ -2,16 +2,16 @@
 <feature
       id="net.sf.jautodoc.feature"
       label="JAutodoc"
-      version="1.14.2.qualifier"
+      version="1.15.0.qualifier"
       provider-name="Martin Kesting"
       plugin="net.sf.jautodoc">
 
-   <description url="http://jautodoc.sourceforge.net">
+   <description url="https://github.com/mkesting/jautodoc/wiki">
       Provides support for writing Javadoc.
    </description>
 
    <copyright>
-      Copyright (c) 2019, Martin Kesting, All rights reserved.
+      Copyright (c) 2020, Martin Kesting, All rights reserved.
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
@@ -214,7 +214,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JAutodoc" url="http://jautodoc.sourceforge.net/update/"/>
+      <update label="JAutodoc" url="https://dl.bintray.com/mkesting/jautodoc/update/latest/"/>
    </url>
 
    <requires>

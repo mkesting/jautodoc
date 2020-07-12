@@ -266,11 +266,13 @@ public class JavadocCreator {
      * @param indent the indent string
      * @param lineSeparator the line separator
      * @param jdi the Javadoc info
+     * @param document the document
+     * @param scanner the scanner
      * @return the resulting Javadoc string
-     * @throws JavaModelException failure in Java model
+     * @throws Exception failure in Java model
      */
     public String createJavadoc(final IMethod method, final String indent, final String lineSeparator,
-            final JavadocInfo jdi) throws JavaModelException {
+            final JavadocInfo jdi, final IDocument document, final IScanner scanner) throws Exception {
 
         final List<String> text = jdi.getComment();
         if (text.isEmpty()) {
@@ -299,7 +301,7 @@ public class JavadocCreator {
         final String[] exceptionTypes = SourceUtils.getExceptionTypes(method, jdi.getThrowsDoc().keySet());
 
         createJavadocForTypeParams(jdi.getParamDoc(), method, method.getTypeParameters());
-        createJavadocForParameters(jdi.getParamDoc(), method);
+        createJavadocForParameters(jdi.getParamDoc(), method, document, scanner);
         createJavadocForReturn(jdi.getReturnDoc(), method);
         createJavadocForExceptions(jdi.getThrowsDoc(), method, exceptionTypes);
 
@@ -382,11 +384,14 @@ public class JavadocCreator {
     /**
      * Creates Javadoc for parameters of the given method.
      *
-     * @param method the method
      * @param paramDoc the existing parameter Javadoc
-     * @throws JavaModelException failure in Java model
+     * @param method the method
+     * @param document the document
+     * @param scanner the scanner
+     * @throws Exception failure in Java model
      */
-    private void createJavadocForParameters(Map<String, JavadocTag> paramDoc, IMethod method) throws JavaModelException {
+    private void createJavadocForParameters(Map<String, JavadocTag> paramDoc, IMethod method, IDocument document,
+            IScanner scanner) throws Exception {
 
         final String[] parameterNames = method.getParameterNames();
         final String[] parameterTypes = method.getParameterTypes();
@@ -407,6 +412,13 @@ public class JavadocCreator {
             if (!config.isCreateDummyComment()) {
                 comments.add("");
                 continue;
+            }
+
+            if (method.isConstructor() && config.isGetterSetterFromField()) {
+                lookupParameterFromField(method, parameterTypes[i], parameterNames[i], comments, document, scanner);
+                if (!comments.isEmpty()) {
+                    continue;
+                }
             }
 
             // try to apply a template
@@ -467,6 +479,36 @@ public class JavadocCreator {
             }
         } catch (Exception e) {
             JAutodocPlugin.getDefault().handleException(e);
+        }
+    }
+
+    /**
+     * Try to lookup parameter comment from related field.
+     *
+     * @param method the related method
+     * @param type the parameter type
+     * @param name the parameter name
+     * @param comments the resulting comments
+     * @param document the document
+     * @param scanner the scanner
+     * @throws Exception failure in Java model
+     */
+    private void lookupParameterFromField(IMethod method, String type, String name, List<String> comments,
+            IDocument document, IScanner scanner) throws Exception {
+
+        IField field = SourceUtils.getField(method.getDeclaringType(), name);
+
+        if (field != null && field.exists() && field.getTypeSignature().equals(type)) {
+
+            JavadocInfo fieldJdi = new JavadocInfo();
+            ISourceRange docRange = SourceUtils.findJavadocSourceRange(field, scanner);
+
+            fieldJdi.parseJavadoc(document.get(docRange.getOffset(), docRange.getLength()));
+
+            comments.addAll(fieldJdi.getComment());
+            if (!comments.isEmpty()) {
+                comments.set(0, StringUtils.firstToLower(comments.get(0).trim()));
+            }
         }
     }
 

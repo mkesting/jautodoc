@@ -20,6 +20,7 @@ public class JAutodocCleanUpOptionsInitializer implements ICleanUpOptionsInitial
     /** {@inheritDoc} */
     @Override
     public void setDefaultOptions(final CleanUpOptions options) {
+        options.setOption(Constants.CLEANUP_JAVADOC_OPTION, CleanUpOptions.FALSE);
         options.setOption(Constants.CLEANUP_ADD_HEADER_OPTION, CleanUpOptions.FALSE);
         options.setOption(Constants.CLEANUP_REP_HEADER_OPTION, CleanUpOptions.FALSE);
     }
