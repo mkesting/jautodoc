@@ -214,7 +214,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JAutodoc" url="https://dl.bintray.com/mkesting/jautodoc/update/latest/"/>
+      <update label="JAutodoc" url="https://mkesting.github.io/jautodoc-update/latest/"/>
    </url>
 
    <requires>
