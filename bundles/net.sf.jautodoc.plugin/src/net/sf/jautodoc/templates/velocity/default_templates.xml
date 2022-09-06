@@ -105,7 +105,7 @@
 </template>
 <template kind="3" name="Method.Getter" default="false" signature="true">
     <regex>\S+ get(\S+)\(.*\)</regex>
-    <example>int getNumberOfQuestions()</example>
+    <example>Vector<String> getQuestionsList()</example>
     <text>/**
  * Gets the ${e.g(1).rsfl()}.
  * 
@@ -113,12 +113,12 @@
  */</text>
 </template>
 <template kind="3" name="Method.Setter" default="false" signature="true">
-    <regex>void set(\S+)\([^,]+ ([^,]+)\)</regex>
-    <example>void setNumberOfQuestions(int number)</example>
+    <regex>void set(\S+)\([\S ]+(<[\S,]*>)? ([\S]+)\)</regex>
+    <example>void setQuestionsList(Vector<String> questions)</example>
     <text>/**
  * Sets the ${e.g(1).rsfl()}.
  * 
- * @param ${e.g(2)} the new ${e.g(1).rsfl()}
+ * @param ${e.g(3)} the new ${e.g(1).rsfl()}
  */</text>
 </template>
 <template kind="3" name="Method.boolean Getter" default="false" signature="true">
