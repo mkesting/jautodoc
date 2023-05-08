@@ -23,9 +23,9 @@
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.6.0</version>
 						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>3.1.0</version>
 						<executions>
 							<execution>
 								<id>runPushToBintray</id>
