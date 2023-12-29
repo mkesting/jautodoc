@@ -196,7 +196,7 @@ public class TaskSearchEngine extends AbstractSourceProcessor {
         if (member instanceof IType) {
             final JavadocInfo emptyJdi = new JavadocInfo();
             final JavadocInfo generatedJdi = javadocCreator.applyTemplate(member, emptyJdi);
-            generatedJavadoc = javadocCreator.createJavadoc((IType) member, "", "\n", generatedJdi);
+            generatedJavadoc = javadocCreator.createJavadoc((IType) member, "", "\n", generatedJdi, document, commentScanner);
         }
         else if (member instanceof IField) {
             final JavadocInfo emptyJdi = new JavadocInfo();

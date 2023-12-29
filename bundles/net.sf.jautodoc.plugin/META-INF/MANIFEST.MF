@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JAutodoc Plug-in
 Bundle-SymbolicName: net.sf.jautodoc; singleton:=true
-Bundle-Version: 1.15.0.qualifier
+Bundle-Version: 1.16.0.qualifier
 Bundle-Activator: net.sf.jautodoc.JAutodocPlugin
 Bundle-Vendor: Martin Kesting
 Bundle-Localization: plugin

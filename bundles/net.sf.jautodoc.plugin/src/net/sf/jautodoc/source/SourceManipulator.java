@@ -148,7 +148,7 @@ public class SourceManipulator extends AbstractSourceProcessor {
 
     @Override
     protected void processMember(final IMember member) throws Exception {
-        addJavadoc(member);
+    	addJavadoc(member);
     }
 
     @Override
@@ -192,7 +192,8 @@ public class SourceManipulator extends AbstractSourceProcessor {
             if (config.isCreateDummyComment()) {
                 jdi = javadocCreator.applyTemplate(member, jdi);
             }
-            newJavadoc = javadocCreator.createJavadoc((IType)member, indent, lineDelimiter, jdi);
+            newJavadoc = javadocCreator.createJavadoc((IType) member, indent, lineDelimiter, jdi,
+                    document, commentScanner);
         }
         else if (member instanceof IField) {
             if (config.isCreateDummyComment()) {

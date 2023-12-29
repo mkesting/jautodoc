@@ -40,7 +40,7 @@
  * The class that is interested in processing a ${e.g(1).fl()}
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's &lt;code&gt;add${e.g(1)}Listener&lt;code&gt; method. When
+ * component's &lt;code&gt;add${e.g(1)}Listener&lt;/code&gt; method. When
  * the ${e.g(1).fl()} event occurs, that object's appropriate
  * method is invoked.
  *
@@ -99,7 +99,7 @@
     <example>getInstance</example>
     <text>/**
  * Gets the single instance of ${e.getDeclaringType()}.
- * 
+ *
  * @return single instance of ${e.getDeclaringType()}
  */</text>
 </template>
@@ -108,7 +108,7 @@
     <example>int getNumberOfQuestions()</example>
     <text>/**
  * Gets the ${e.g(1).rsfl()}.
- * 
+ *
  * @return the ${e.g(1).rsfl()}
  */</text>
 </template>
@@ -117,7 +117,7 @@
     <example>void setNumberOfQuestions(int number)</example>
     <text>/**
  * Sets the ${e.g(1).rsfl()}.
- * 
+ *
  * @param ${e.g(2)} the new ${e.g(1).rsfl()}
  */</text>
 </template>
@@ -126,7 +126,7 @@
     <example>boolean isBlue()</example>
     <text>/**
  * Checks if is ${e.g(1).rsfl()}.
- * 
+ *
  * @return true, if is ${e.g(1).rsfl()}
  */</text>
 </template>
@@ -135,7 +135,7 @@
     <example>void main(String[] args)</example>
     <text>/**
  * The main method.
- * 
+ *
  * @param ${e.g(1)} the arguments
  */</text>
 </template>
@@ -158,7 +158,7 @@
     <example>boolean doSomething(int parameter)</example>
     <text>/**
  * ${e.g(1).rsfu()}.
- * 
+ *
  * @return true, if successful
  */</text>
 </template>
@@ -167,7 +167,7 @@
     <example>ReturnValue calculateSomething()</example>
     <text>/**
  * ${e.g(2).rsfu()}.
- * 
+ *
  * @return the ${e.g(1).rsfl()}
  */</text>
 </template>
@@ -209,7 +209,7 @@
     <regex>p([A-Z].+)</regex>
     <example>pField</example>
     <text>/**
- * @param ${e} the ${e.g(1).rsfl()} 
+ * @param ${e} the ${e.g(1).rsfl()}
  */</text>
 </template>
 <template kind="4" name="Parameter.Default" default="true" signature="false">

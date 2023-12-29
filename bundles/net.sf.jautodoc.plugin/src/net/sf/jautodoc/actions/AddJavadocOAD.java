@@ -12,19 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.jautodoc.preferences.Configuration;
-import net.sf.jautodoc.preferences.ConfigurationManager;
-import net.sf.jautodoc.preferences.Constants;
-import net.sf.jautodoc.source.JavadocFormatter;
-import net.sf.jautodoc.source.SourceManipulator;
-import net.sf.jautodoc.utils.Utils;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMember;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.texteditor.ITextEditor;
+
+import net.sf.jautodoc.preferences.Configuration;
+import net.sf.jautodoc.preferences.ConfigurationManager;
+import net.sf.jautodoc.preferences.Constants;
+import net.sf.jautodoc.source.JavadocFormatter;
+import net.sf.jautodoc.source.SourceManipulator;
+import net.sf.jautodoc.utils.SourceUtils;
+import net.sf.jautodoc.utils.Utils;
 
 
 /**
@@ -143,6 +144,11 @@ public class AddJavadocOAD extends AbstractOAD {
             final List<IMember> memberList = new ArrayList<IMember>();
             for (int i = 0; i < members.size(); ++i) {
                 final IMember member = members.get(i);
+
+                if (!isApplicableMember(member)) {
+                    continue;
+                }
+
                 if (compUnit != member.getCompilationUnit()) {
                     continue;
                 }
@@ -158,11 +164,16 @@ public class AddJavadocOAD extends AbstractOAD {
                 }
 
                 for (int j = 0; j < elements.length; ++j) {
-                    if (elements[j] instanceof IMember)
-                    memberList.add((IMember)elements[j]);
+					if (elements[j] instanceof IMember && isApplicableMember((IMember) elements[j])) {
+						memberList.add((IMember) elements[j]);
+					}
                 }
             }
             return memberList.toArray(new IMember[memberList.size()]);
+        }
+
+        private boolean isApplicableMember(final IMember member) {
+        	return !SourceUtils.isGeneratedMember(member) && !SourceUtils.isRecordComponent(member);
         }
     }
 }

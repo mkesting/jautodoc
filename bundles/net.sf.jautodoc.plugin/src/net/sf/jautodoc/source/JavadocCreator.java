@@ -58,11 +58,13 @@ public class JavadocCreator {
      * @param indent the indent string
      * @param lineSeparator the line separator
      * @param jdi the Javadoc info
+     * @param document the document
+     * @param scanner the scanner
      * @return the resulting Javadoc string
      * @throws JavaModelException failure in Java model
      */
-    public String createJavadoc(final IType type, final String indent, final String lineSeparator, final JavadocInfo jdi)
-            throws JavaModelException {
+    public String createJavadoc(final IType type, final String indent, final String lineSeparator,
+            final JavadocInfo jdi, final IDocument document, final IScanner scanner) throws JavaModelException {
 
         final List<String> text = jdi.getComment();
         if (text.isEmpty()) {
@@ -89,6 +91,9 @@ public class JavadocCreator {
         }
 
         createJavadocForTypeParams(jdi.getParamDoc(), type, type.getTypeParameters());
+        if (type.isRecord()) {
+            createJavadocForRecordComponents(jdi.getParamDoc(), type, document, scanner);
+        }
         return createJavadocString(indent, lineSeparator, jdi, SourceUtils.getParameterNames(type));
     }
 
@@ -445,6 +450,56 @@ public class JavadocCreator {
                 comment = CommentManager
                         .createComment(config, parameterNames[i], CommentManager.PARAMETER, true, true);
             }
+
+            if (!comment.startsWith(Constants.JDOC_THE_UPPER) && !comment.startsWith(Constants.JDOC_THE_LOWER)) {
+                comment = Constants.JDOC_THE_LOWER + " " + comment;
+            }
+
+            comments.add(comment);
+        }
+    }
+
+    /**
+     * Creates Javadoc for components of the given record type.
+     *
+     * @param paramDoc the existing parameter Javadoc
+     * @param type the record type
+     * @param document the document
+     * @param scanner the scanner
+     * @throws JavaModelException failure in Java model
+     */
+    private void createJavadocForRecordComponents(Map<String, JavadocTag> paramDoc, IType type, IDocument document,
+            IScanner scanner) throws JavaModelException {
+
+        IField[] recordComponents = type.getRecordComponents();
+
+        for (int i = 0; i < recordComponents.length; ++i) {
+
+            JavadocTag paramTag = paramDoc.get(recordComponents[i].getElementName());
+            if (paramTag == null) {
+                paramTag = new JavadocTag(JavadocTag.TAG_TYPE_PARAM, recordComponents[i].getElementName());
+                paramDoc.put(recordComponents[i].getElementName(), paramTag);
+            }
+
+            final List<String> comments = paramTag.getComments();
+            if (!comments.isEmpty()) {
+                continue;
+            }
+
+            if (!config.isCreateDummyComment()) {
+                comments.add("");
+                continue;
+            }
+
+            // try to apply a template
+            applyParameterTemplate(type, recordComponents[i].getTypeSignature(), recordComponents[i].getElementName(), comments);
+            if (!comments.isEmpty()) {
+                continue;
+            }
+
+            // no template -> create dummy doc
+            String comment = CommentManager
+                    .createComment(config, recordComponents[i].getElementName(), CommentManager.PARAMETER, true, true);
 
             if (!comment.startsWith(Constants.JDOC_THE_UPPER) && !comment.startsWith(Constants.JDOC_THE_LOWER)) {
                 comment = Constants.JDOC_THE_LOWER + " " + comment;

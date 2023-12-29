@@ -18,17 +18,17 @@ import org.eclipse.jdt.core.JavaModelException;
 public class TypeWrapper extends AbstractMemberWrapper {
 	private IType type;
 
-	
+
 	/**
 	 * Instantiates a new type wrapper.
-	 * 
+	 *
 	 * @param type the type
 	 */
 	protected TypeWrapper(IType type) {
 		super(type, ITemplateKinds.TYPE);
 		this.type = type;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see net.sf.jautodoc.templates.wrapper.IMemberWrapper#getSignature()
 	 */
@@ -43,15 +43,19 @@ public class TypeWrapper extends AbstractMemberWrapper {
 		if (type.isClass()) {
 			return "class";
 		}
-		
+
 		if (type.isInterface()) {
 			return "interface";
 		}
-		
+
 		if (type.isEnum()) {
 			return "enum";
 		}
-		
+
+		if (type.isRecord()) {
+            return "record";
+        }
+
 		return "";
 	}
 }

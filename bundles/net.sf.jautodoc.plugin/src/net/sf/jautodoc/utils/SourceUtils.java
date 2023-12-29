@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import net.sf.jautodoc.JAutodocPlugin;
@@ -134,19 +135,40 @@ public final class SourceUtils {
     }
 
     public static boolean isMatchingType(final IType type, final IMemberFilter filter) throws JavaModelException {
-        return filter.isIncludeTypes() && hasMatchingVisibility(type, filter);
+        return filter.isIncludeTypes() && hasMatchingVisibility(type, filter) && !isGeneratedMember(type);
     }
 
     public static boolean isMatchingField(final IField field, final IMemberFilter filter) throws JavaModelException {
-        return filter.isIncludeFields() && hasMatchingVisibility(field, filter);
+        return filter.isIncludeFields() && hasMatchingVisibility(field, filter) && !isGeneratedMember(field);
     }
 
     public static boolean isMatchingMethod(final IMethod method, final IMemberFilter filter) throws JavaModelException {
         if (method.getDeclaringType().isInterface() && Flags.isPackageDefault(method.getFlags())) {
             return filter.isIncludeMethods() && filter.isIncludePublic();
         }
-        return filter.isIncludeMethods() && hasMatchingVisibility(method, filter)
+        return filter.isIncludeMethods() && hasMatchingVisibility(method, filter) && !isGeneratedMember(method)
                 && matchesGetterSetterFilter(method, filter) && matchesOverridingFilter(method, filter);
+    }
+
+    public static boolean isGeneratedMember(final IMember member) {
+        try {
+        	// source is annotation only like Lombock @Getter, @Setter, @Data
+			return Optional.ofNullable(member.getSource()).map(s -> s.matches("^@\\S*$")).orElse(false);
+		} catch (JavaModelException e) {
+			JAutodocPlugin.getDefault().handleException(member, e);
+			return false;
+		}
+    }
+
+    public static boolean isRecordComponent(final IMember member) {
+        return member instanceof IField && Optional.ofNullable(member.getDeclaringType()).map(type -> {
+			try {
+				return type.isRecord() && type.getRecordComponent(member.getElementName()) != null;
+			} catch (JavaModelException e) {
+				JAutodocPlugin.getDefault().handleException(member, e);
+				return false;
+			}
+		}).orElse(false);
     }
 
     public static boolean matchesOverridingFilter(final IMethod method, final IMemberFilter filter) {
@@ -405,9 +427,13 @@ public final class SourceUtils {
      */
     public static String[] getParameterNames(final IType type) throws JavaModelException {
         final ITypeParameter[] typeParameters = type.getTypeParameters();
-        final String[] parameterNames = new String[typeParameters.length];
+        final IField[] recordComponents = type.getRecordComponents();
+        final String[] parameterNames = new String[typeParameters.length + recordComponents.length];
 
         getTypeParameterNames(typeParameters, parameterNames);
+        for (int i = 0; i < recordComponents.length; ++i) {
+            parameterNames[typeParameters.length + i] = recordComponents[i].getElementName();
+        }
         return parameterNames;
     }
 
