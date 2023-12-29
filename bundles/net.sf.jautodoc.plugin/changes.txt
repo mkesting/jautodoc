@@ -1,5 +1,9 @@
 Changes for JAutodoc
 
+* 2023-12-29 Version 1.16.0
+      o Support for records
+      o Ignore Lombok generated code
+
 * 2020-07-12 Version 1.15.0
       o Clean Up and Save Action for Javadoc
       o Use field comments on constructor parameters

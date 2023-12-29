@@ -8,5 +8,6 @@
   <children size='2'>
     <child location='../1.14.2'/>
     <child location='../1.15.0'/>
+    <child location='../1.16.0'/>
   </children>
 </repository>

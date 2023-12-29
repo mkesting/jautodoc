@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2023, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -192,7 +192,8 @@ public class SourceManipulator extends AbstractSourceProcessor {
             if (config.isCreateDummyComment()) {
                 jdi = javadocCreator.applyTemplate(member, jdi);
             }
-            newJavadoc = javadocCreator.createJavadoc((IType)member, indent, lineDelimiter, jdi);
+            newJavadoc = javadocCreator.createJavadoc((IType) member, indent, lineDelimiter, jdi,
+                    document, commentScanner);
         }
         else if (member instanceof IField) {
             if (config.isCreateDummyComment()) {

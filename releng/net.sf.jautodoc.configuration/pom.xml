@@ -5,13 +5,13 @@
 
 	<groupId>net.sf.jautodoc</groupId>
 	<artifactId>net.sf.jautodoc.configuration</artifactId>
-	<version>1.15.0</version>
+	<version>1.16.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.7.0</tycho.version>
+		<tycho.version>4.0.4</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-repo.url>http://download.eclipse.org/releases/2020-06</eclipse-repo.url>
+		<eclipse-repo.url>https://download.eclipse.org/releases/2023-12</eclipse-repo.url>
 	</properties>
 
 	<repositories>
