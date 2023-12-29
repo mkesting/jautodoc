@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2023, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -148,7 +148,7 @@ public class SourceManipulator extends AbstractSourceProcessor {
 
     @Override
     protected void processMember(final IMember member) throws Exception {
-    	addJavadoc(member);
+        addJavadoc(member);
     }
 
     @Override

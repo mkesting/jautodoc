@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2023, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -152,23 +152,23 @@ public final class SourceUtils {
 
     public static boolean isGeneratedMember(final IMember member) {
         try {
-        	// source is annotation only like Lombock @Getter, @Setter, @Data
-			return Optional.ofNullable(member.getSource()).map(s -> s.matches("^@\\S*$")).orElse(false);
-		} catch (JavaModelException e) {
-			JAutodocPlugin.getDefault().handleException(member, e);
-			return false;
-		}
+            // source is annotation only like Lombock @Getter, @Setter, @Data
+            return Optional.ofNullable(member.getSource()).map(s -> s.matches("^@\\S*$")).orElse(false);
+        } catch (JavaModelException e) {
+            JAutodocPlugin.getDefault().handleException(member, e);
+            return false;
+        }
     }
 
     public static boolean isRecordComponent(final IMember member) {
         return member instanceof IField && Optional.ofNullable(member.getDeclaringType()).map(type -> {
-			try {
-				return type.isRecord() && type.getRecordComponent(member.getElementName()) != null;
-			} catch (JavaModelException e) {
-				JAutodocPlugin.getDefault().handleException(member, e);
-				return false;
-			}
-		}).orElse(false);
+            try {
+                return type.isRecord() && type.getRecordComponent(member.getElementName()) != null;
+            } catch (JavaModelException e) {
+                JAutodocPlugin.getDefault().handleException(member, e);
+                return false;
+            }
+        }).orElse(false);
     }
 
     public static boolean matchesOverridingFilter(final IMethod method, final IMemberFilter filter) {
@@ -244,9 +244,9 @@ public final class SourceUtils {
     public static boolean hasMatchingVisibility(final IMember member, final IMemberFilter filter) throws JavaModelException {
         final int flags = member.getFlags();
         if (filter.isIncludePublic()    && Flags.isPublic(flags) ||
-            filter.isIncludeProtected() && Flags.isProtected(flags) ||
-            filter.isIncludePackage()   && Flags.isPackageDefault(flags) ||
-            filter.isIncludePrivate()   && Flags.isPrivate(flags)) {
+                filter.isIncludeProtected() && Flags.isProtected(flags) ||
+                filter.isIncludePackage()   && Flags.isPackageDefault(flags) ||
+                filter.isIncludePrivate()   && Flags.isPrivate(flags)) {
             return true;
         }
         return false;
@@ -384,7 +384,7 @@ public final class SourceUtils {
      * @throws JavaModelException the java model exception
      */
     public static String getInheritedJavadoc(IMethod method, String indent, String lineSeparator)
-                                                    throws JavaModelException {
+            throws JavaModelException {
         String javadoc = null;
         try {
             final IMethod overridden = findOverriddenMethod(method);
@@ -548,7 +548,7 @@ public final class SourceUtils {
      * @throws BadLocationException the bad location exception
      */
     public static String correctIndent(final String comment, final String indent, final String lineSeparator)
-                                                        throws BadLocationException {
+            throws BadLocationException {
         final ILineTracker tracker = new DefaultLineTracker();
         tracker.set(comment);
 

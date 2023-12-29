@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2023, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -33,11 +33,11 @@ public class AddJavadocEAD extends AbstractEAD {
 
             final IMember member = getSelectedMember(compUnit);
             if (member != null && !SourceUtils.isGeneratedMember(member)) {
-            	if (SourceUtils.isRecordComponent(member)) {
-            		sm.addJavadoc(new IMember[] { member.getDeclaringType() }, monitor);
-            	} else {
-            		sm.addJavadoc(new IMember[] { member }, monitor);
-            	}
+                if (SourceUtils.isRecordComponent(member)) {
+                    sm.addJavadoc(new IMember[] { member.getDeclaringType() }, monitor);
+                } else {
+                    sm.addJavadoc(new IMember[] { member }, monitor);
+                }
             } else {
                 final ITextSelection textSelection = getSelection();
                 if (textSelection != null) {
