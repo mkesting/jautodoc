@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -9,7 +9,6 @@ package net.sf.jautodoc.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 /**
  * Class with string utilities.
@@ -236,6 +235,17 @@ public final class StringUtils {
 	public static String valueOf(final Object object) {
 	    return object == null ? "" : object.toString();
 	}
+
+	/**
+	 * Get start of string with the given length.
+	 *
+	 * @param string the string
+	 * @param length the length
+	 * @return start of the string
+	 */
+	public static String startOf(final String string, final int length) {
+        return string == null || string.length() == 0 ? "" : string.substring(0, Math.min(string.length(), length));
+    }
 
 	/**
 	 * Infer the indentation level based on the given reference indentation

@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -43,11 +43,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.FileEditorInput;
 
-
 /**
  * Utility class.
  */
 public final class Utils {
+
+    // from ITerminalSymbols (compatibility with older versions)
+    private static final int TokenNameCOMMENT_MARKDOWN = 1004;
 
     /**
      * Check, if token is comment.
@@ -56,8 +58,9 @@ public final class Utils {
      * @return true, if token is comment
      */
     public static final boolean isComment(int token) {
-        return     token == ITerminalSymbols.TokenNameCOMMENT_BLOCK ||
+        return  token == ITerminalSymbols.TokenNameCOMMENT_BLOCK ||
                 token == ITerminalSymbols.TokenNameCOMMENT_JAVADOC ||
+                token == ITerminalSymbols.TokenNameCOMMENT_MARKDOWN ||
                 token == ITerminalSymbols.TokenNameCOMMENT_LINE;
     }
 
@@ -89,6 +92,16 @@ public final class Utils {
      */
     public static final boolean isJavadocComment(int token) {
         return token == ITerminalSymbols.TokenNameCOMMENT_JAVADOC;
+    }
+
+    /**
+     * Check, if token is markdown comment.
+     *
+     * @param token the token
+     * @return true, if token is markdown comment
+     */
+    public static final boolean isMarkdownComment(int token) {
+        return token == TokenNameCOMMENT_MARKDOWN;
     }
 
     /**

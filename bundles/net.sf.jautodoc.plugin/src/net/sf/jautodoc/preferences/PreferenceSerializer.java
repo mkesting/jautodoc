@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -51,6 +51,9 @@ public final class PreferenceSerializer {
             configuration.setCompleteExistingJavadoc(ob.completeButton.getSelection());
             configuration.setKeepExistingJavadoc(ob.keepButton.getSelection());
             configuration.setReplaceExistingJavadoc(ob.replaceButton.getSelection());
+
+            configuration.setUseMarkdown(ob.useMarkdownButton.getSelection());
+            configuration.setSwitchDocStyle(ob.switchDocStyleButton.getSelection());
 
             configuration.setVisibilityPublic(ob.publicButton.getSelection());
             configuration.setVisibilityProtected(ob.protectedButton.getSelection());
@@ -114,6 +117,9 @@ public final class PreferenceSerializer {
             ob.completeButton.setSelection(configuration.isCompleteExistingJavadoc());
             ob.keepButton.setSelection(configuration.isKeepExistingJavadoc());
             ob.replaceButton.setSelection(configuration.isReplaceExistingJavadoc());
+
+            ob.useMarkdownButton.setSelection(configuration.isUseMarkdown());
+            ob.switchDocStyleButton.setSelection(configuration.isSwitchDocStyle());
 
             ob.publicButton.setSelection(configuration.isIncludePublic());
             ob.protectedButton.setSelection(configuration.isIncludeProtected());

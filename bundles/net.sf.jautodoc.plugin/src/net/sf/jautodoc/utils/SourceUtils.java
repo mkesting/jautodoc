@@ -1,12 +1,11 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2023, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
  * for details.
  *******************************************************************/
 package net.sf.jautodoc.utils;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -270,6 +269,7 @@ public final class SourceUtils {
 
         int commentStart = -1;
         int commentEnd   = -1;
+        boolean markdownComment = false;
         boolean singleLineComment = false;
 
         int token = scanner.getNextToken();
@@ -278,6 +278,7 @@ public final class SourceUtils {
                 commentStart = scanner.getCurrentTokenStartPosition();
             }
             commentEnd = scanner.getCurrentTokenEndPosition();
+            markdownComment = Utils.isMarkdownComment(token);
             singleLineComment = Utils.isSingleLineComment(token);
 
             if (onlyFirstComment) {
@@ -291,7 +292,7 @@ public final class SourceUtils {
             commentStart = offset;
             commentEnd = commentStart - 1;
         }
-        else if (singleLineComment) {
+        else if (markdownComment || singleLineComment) {
             // exclude line delimiter from range
             String delim = document.getLineDelimiter(document.getLineOfOffset(commentEnd));
             if (delim != null) {
@@ -327,7 +328,7 @@ public final class SourceUtils {
 
         int token = scanner.getNextToken();
         while (Utils.isComment(token)) {
-            if (Utils.isJavadocComment(token)) {
+            if (Utils.isJavadocComment(token) || Utils.isMarkdownComment(token)) {
                 javadocStart = scanner.getCurrentTokenStartPosition();
                 javadocEnd   = scanner.getCurrentTokenEndPosition();
                 break;
@@ -354,12 +355,20 @@ public final class SourceUtils {
                 }
             }
             javadocEnd = javadocStart - 1;
+        } else {
+            char[] currentTokenSource = scanner.getCurrentTokenSource();
+            for (int i = currentTokenSource.length - 1; i >= 0
+                    && (currentTokenSource[i] == '\r' || currentTokenSource[i] == '\n'); i--) {
+                javadocEnd--;
+            }
         }
+
         return new SourceRange(javadocStart, javadocEnd - javadocStart + 1);
     }
 
-    public static boolean isSameComment(final String existingJavadoc, final String newJavadoc) {
-        if (existingJavadoc == null || existingJavadoc.length() == 0) {
+    public static boolean isSameComment(final String existingJavadoc, final String newJavadoc, final boolean checkCommentStyle) {
+        if (existingJavadoc == null || existingJavadoc.length() == 0 || (checkCommentStyle
+                && !StringUtils.startOf(existingJavadoc, 2).equals(StringUtils.startOf(newJavadoc, 2)))) {
             return false;
         }
         return getRawComment(existingJavadoc).equals(getRawComment(newJavadoc));

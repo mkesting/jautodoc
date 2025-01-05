@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -89,7 +89,7 @@ public class TaskSearchEngine extends AbstractSourceProcessor {
         final String newHeader = JAutodocPlugin.getContext().getTemplateManager().evaluateTemplate(compUnit,
                 config.getHeaderText(), "File Header", config.getProperties());
 
-        if (!SourceUtils.isSameComment(existingHeader, newHeader)) {
+        if (!SourceUtils.isSameComment(existingHeader, newHeader, false)) {
             addMatch(compUnit, offset, length, FindingId.OUTDATED_HEADER, "Outdated file header");
         }
     }
@@ -207,7 +207,7 @@ public class TaskSearchEngine extends AbstractSourceProcessor {
             generatedJavadoc = processGeneratedMethodJavadoc((IMethod) member);
         }
 
-        if (!isEmpty(generatedJavadoc) && SourceUtils.isSameComment(existingJavadoc, generatedJavadoc)) {
+        if (!isEmpty(generatedJavadoc) && SourceUtils.isSameComment(existingJavadoc, generatedJavadoc, false)) {
             addMatch(member, FindingId.GENERATED_JAVADOC, "Generated Javadoc");
         }
     }

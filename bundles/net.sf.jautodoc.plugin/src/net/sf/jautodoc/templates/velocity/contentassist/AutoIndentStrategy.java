@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -18,15 +18,14 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.TextUtilities;
 
-
 /**
  * Strategy for auto indention in Velocity templates.
  */
 public class AutoIndentStrategy implements IAutoEditStrategy {
-	
+
 	private DirectiveDetector directiveDetector = new DirectiveDetector();
-	
-	
+
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.text.IAutoEditStrategy#customizeDocumentCommand(org.eclipse.jface.text.IDocument, org.eclipse.jface.text.DocumentCommand)
 	 */
@@ -35,7 +34,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 				c.offset == -1 || c.length > 0 || c.text == null) {
 			return;
 		}
-		
+
 		String[] lineDelimiters = d.getLegalLineDelimiters();
 		int index = TextUtilities.endsWith(lineDelimiters, c.text);
 		if (index > -1 && lineDelimiters[index].equals(c.text)) {
@@ -46,12 +45,12 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 	private void indentAfterNewLine(IDocument d, DocumentCommand c) {
 		try {
 			String partition = Utils.getPartition(d, c.offset);
-			
+
 			// find start of line
 			IRegion info = d.getLineInformation(d.getLineOfOffset(c.offset));
 			int lineOffset = info.getOffset();
 			int lineLength = info.getLength();
-			
+
 			// line empty or comment closed -> do nothing
 			String line = d.get(lineOffset, lineLength).trim();
 			if (line.length() == 0 || line.endsWith("*/")) {
@@ -67,12 +66,12 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 				indention = d.get(lineOffset, eow - lineOffset);
 				buf.append(indention);
 			}
-			
+
 			// inside brackets or quotes -> no prefix
 			if (isInsideBrackets(d, lineOffset, c.offset)) {
 				return;
 			}
-			
+
 			// check type of partition
 			if (partition.equals(ITemplatePartitions.MULTI_LINE_COMMENT)) {
 				// Velocity multi line comment partition
@@ -90,7 +89,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 			c.text = buf.toString();
 		} catch (BadLocationException excp) {/* stop work */}
 	}
-	
+
 	private void handleMultiLineCommentPartition(IDocument d, int eow,
 			StringBuffer buf) throws BadLocationException {
 		if (d.getChar(eow) == '#') {
@@ -100,7 +99,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 			buf.append("* "); // indention already set
 		}
 	}
-	
+
 	private void handleSingleLineCommentPartition(IDocument d, String indention,
 			StringBuffer buf) throws BadLocationException {
 		if (indention.length() == 0) {
@@ -110,7 +109,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 			buf.append("* "); // indention already set
 		}
 	}
-	
+
 	private void handleDefaultPartition(IDocument d, DocumentCommand c,
 			IRegion lineInfo, int eow, String indention, StringBuffer buf)
 			throws BadLocationException {
@@ -124,6 +123,10 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 				c.caretOffset = c.offset + buf.length();
 				c.shiftsCaret = false;
 				buf.append(d.getLegalLineDelimiters()[0] + indention + " */");
+			}
+			else if (eow + 2 < d.getLength() && d.getChar(eow + 2) == '/') {
+			    // Markdown comment
+                buf.append("/// ");
 			}
 			else {
 				// single line comment
@@ -145,7 +148,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 					directiveDetector.isWordPart(d.getChar(directiveEnd))) {
 				++directiveEnd;
 			}
-			
+
 			String directive = d.get(eow, directiveEnd - eow);
 			if (DirectiveManager.isMultiLineDirective(directive)) {
 				buf.append(" * ");
@@ -158,10 +161,10 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 			}
 		}
 		else if (ch != '\r' && ch != '\n' && ch != '<' && !Character.isLetterOrDigit(ch)){
-			buf.append(ch).append(" "); // char from previous line 
+			buf.append(ch).append(" "); // char from previous line
 		}
 	}
-	
+
 	private int findEndOfWhiteSpace(IDocument document, int offset, int end)
 			throws BadLocationException {
 		while (offset < end) {
@@ -173,7 +176,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 		}
 		return end;
 	}
-	
+
 	private boolean isInsideBrackets(IDocument d, int start, int end)
 			throws BadLocationException {
 		int cntLeftParenthesis  = 0;
@@ -184,10 +187,10 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 		int cntRightBracket		= 0;
 		int cntSingleQuote		= 0;
 		int cntDoubleQuote		= 0;
-		
+
 		for (int i = start; i < end; ++i) {
 			char ch = d.getChar(i);
-			
+
 			if (ch == '(') {
 				++cntLeftParenthesis;
 			}
@@ -213,7 +216,7 @@ public class AutoIndentStrategy implements IAutoEditStrategy {
 				++cntSingleQuote;
 			}
 		}
-		
+
 		return  cntLeftParenthesis 	> cntRightParenthesis ||
 				cntLeftBrace 		> cntRightBrace ||
 				cntLeftBracket		> cntRightBracket ||

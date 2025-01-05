@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -34,7 +34,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-
 
 /**
  * Contains a Workspace or Project specific configuration.
@@ -73,6 +72,8 @@ public class Configuration implements IMemberFilter, IPropertyChangeListener, Co
     private boolean useEclipseFormatter   = false;
     private boolean getterSetterFromField = false;
     private boolean includeSubPackages    = false;
+    private boolean useMarkdown           = false;
+    private boolean switchDocStyle        = false;
 
     private boolean getterSetterFromFieldFirst   = true;
     private boolean getterSetterFromFieldReplace = false;
@@ -166,6 +167,8 @@ public class Configuration implements IMemberFilter, IPropertyChangeListener, Co
         this.useEclipseFormatter   = c.useEclipseFormatter;
         this.getterSetterFromField = c.getterSetterFromField;
         this.includeSubPackages    = c.includeSubPackages;
+        this.useMarkdown           = c.useMarkdown;
+        this.switchDocStyle        = c.switchDocStyle;
 
         this.getterSetterFromFieldFirst   = c.getterSetterFromFieldFirst;
         this.getterSetterFromFieldReplace = c.getterSetterFromFieldReplace;
@@ -374,6 +377,24 @@ public class Configuration implements IMemberFilter, IPropertyChangeListener, Co
         this.getterSetterFromFieldReplace = getterSetterFromFieldReplace;
     }
 
+    public boolean isUseMarkdown() {
+        return useMarkdown;
+    }
+
+    public void setUseMarkdown(boolean useMarkdown) {
+        checkReadonly();
+        this.useMarkdown = useMarkdown;
+    }
+
+    public boolean isSwitchDocStyle() {
+        return switchDocStyle;
+    }
+
+    public void setSwitchDocStyle(boolean switchDocStyle) {
+        checkReadonly();
+        this.switchDocStyle = switchDocStyle;
+    }
+
     public boolean isIncludeSubPackages() {
         return includeSubPackages;
     }
@@ -514,6 +535,8 @@ public class Configuration implements IMemberFilter, IPropertyChangeListener, Co
         useEclipseFormatter   = prefStore.getBoolean(USE_FORMATTER);
         getterSetterFromField = prefStore.getBoolean(GET_SET_FROM_FIELD);
         includeSubPackages    = prefStore.getBoolean(INCLUDE_SUBPACKAGES);
+        useMarkdown           = prefStore.getBoolean(USE_MARKDOWN);
+        switchDocStyle        = prefStore.getBoolean(SWITCH_DOC_STYLE);
         addHeader             = prefStore.getBoolean(ADD_HEADER);
         replaceHeader         = prefStore.getBoolean(REPLACE_HEADER);
         multiCommentHeader    = prefStore.getBoolean(MULTI_HEADER);
@@ -630,6 +653,12 @@ public class Configuration implements IMemberFilter, IPropertyChangeListener, Co
         }
         else if (INCLUDE_SUBPACKAGES.equals(event.getProperty())) {
             includeSubPackages = prefStore.getBoolean(INCLUDE_SUBPACKAGES);
+        }
+        else if (USE_MARKDOWN.equals(event.getProperty())) {
+            useMarkdown = prefStore.getBoolean(USE_MARKDOWN);
+        }
+        else if (SWITCH_DOC_STYLE.equals(event.getProperty())) {
+            switchDocStyle = prefStore.getBoolean(SWITCH_DOC_STYLE);
         }
         else if (ADD_HEADER.equals(event.getProperty())) {
             addHeader = prefStore.getBoolean(ADD_HEADER);

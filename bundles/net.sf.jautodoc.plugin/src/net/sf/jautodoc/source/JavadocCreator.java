@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -32,7 +32,6 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.Signature;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jface.text.IDocument;
-
 
 /**
  * Creates Javadoc for the given elements.
@@ -328,6 +327,7 @@ public class JavadocCreator {
         if (text != null && text.length() > 0) {
             templateJdi.parseJavadoc(text);
         }
+        templateJdi.setMarkdown(jdi.isMarkdown());
         return jdi.isEmpty() ? templateJdi : jdi.merge(templateJdi);
     }
 
@@ -730,12 +730,12 @@ public class JavadocCreator {
     private String createFieldJavadocString(final String indent, final String lineSeparator, final JavadocInfo jdi)
             throws JavaModelException {
         // start
-        final StringBuilder javadoc = new StringBuilder("/**" + getFieldJavadocSeparator(lineSeparator, jdi.hasTags()));
+        final StringBuilder javadoc = new StringBuilder(jdi.isMarkdown() ? "" : ("/**" + getFieldJavadocSeparator(lineSeparator, jdi.hasTags())));
 
         // text
         for (final String text : jdi.getComment()) {
-            if (!config.isSingleLineComment() || jdi.hasTags()) {
-                startNewLine(javadoc, indent);
+            if (!config.isSingleLineComment() || jdi.hasTags() || javadoc.length() == 0) {
+                startNewLine(javadoc, indent, jdi.isMarkdown());
             }
             javadoc.append(text);
             javadoc.append(getFieldJavadocSeparator(lineSeparator, jdi.hasTags()));
@@ -743,19 +743,23 @@ public class JavadocCreator {
 
         // the rest (maybe some tags for external tools)
         if (jdi.hasTags()) {
-            addEmptyLine(javadoc, indent, lineSeparator);
+            addEmptyLine(javadoc, indent, lineSeparator, jdi.isMarkdown());
         }
 
         final List<JavadocTag> tagComments = jdi.getAllTagComments(EMPTY_ARR, EMPTY_ARR);
         Collections.sort(tagComments, new TagComparator(config.getTagOrder(), Collections.EMPTY_LIST, Collections.EMPTY_LIST));
 
         for (final JavadocTag javadocTag : tagComments) {
-            javadocTag.addToJavadocString(javadoc, indent, getFieldJavadocSeparator(lineSeparator, jdi.hasTags()));
+            javadocTag.addToJavadocString(javadoc, indent, getFieldJavadocSeparator(lineSeparator, jdi.hasTags()), jdi.isMarkdown());
         }
 
         // the end
         if (!config.isSingleLineComment() || jdi.hasTags()) {
-            closeJavadoc(javadoc, indent);
+            closeJavadoc(javadoc, indent, jdi.isMarkdown());
+        }
+        else if (jdi.isMarkdown()) {
+            // remove trailing whitespace
+            javadoc.setLength(javadoc.length() - 1);
         }
         else {
             javadoc.append("*/");
@@ -782,11 +786,11 @@ public class JavadocCreator {
     private String createJavadocString(final String indent, final String lineSeparator, final JavadocInfo jdi,
             final String[] parameterNames, final String[] exceptionTypes)  throws JavaModelException {
 
-        final StringBuilder javadoc = startJavadoc(lineSeparator);
+        final StringBuilder javadoc = startJavadoc(lineSeparator, jdi.isMarkdown());
 
         // text
         for (String text : jdi.getComment()) {
-            startNewLine(javadoc, indent);
+            startNewLine(javadoc, indent, jdi.isMarkdown());
             javadoc.append((String) text);
             javadoc.append(lineSeparator);
         }
@@ -796,37 +800,39 @@ public class JavadocCreator {
                 config.getTagOrder(), Arrays.asList(parameterNames), Arrays.asList(exceptionTypes)));
 
         if (!tagComments.isEmpty()) {
-            addEmptyLine(javadoc, indent, lineSeparator);
+            addEmptyLine(javadoc, indent, lineSeparator, jdi.isMarkdown());
         }
 
         for (final JavadocTag javadocTag : tagComments) {
-            javadocTag.addToJavadocString(javadoc, indent, lineSeparator);
+            javadocTag.addToJavadocString(javadoc, indent, lineSeparator, jdi.isMarkdown());
         }
 
         // and the end
-        closeJavadoc(javadoc, indent);
+        closeJavadoc(javadoc, indent, jdi.isMarkdown());
 
         return javadoc.toString();
     }
 
-    private StringBuilder startJavadoc(final String lineSeparator) {
-        final StringBuilder javadoc = new StringBuilder("/**" + lineSeparator);
+    private StringBuilder startJavadoc(final String lineSeparator, final boolean markdown) {
+        final StringBuilder javadoc = new StringBuilder(markdown ? "" : ("/**" + lineSeparator));
         return javadoc;
     }
 
-    private void closeJavadoc(final StringBuilder javadoc, final String indent) {
+    private void closeJavadoc(final StringBuilder javadoc, final String indent, final boolean markdown) {
         javadoc.append(indent);
-        javadoc.append(" */");
+        javadoc.append(markdown ? "///" : " */");
     }
 
-    private void startNewLine(final StringBuilder javadoc, final String indent) {
-        javadoc.append(indent);
-        javadoc.append(" * ");
+    private void startNewLine(final StringBuilder javadoc, final String indent, final boolean markdown) {
+        if (javadoc.length() > 0) {
+            javadoc.append(indent);
+        }
+        javadoc.append(markdown ? "/// " : " * ");
     }
 
-    private void addEmptyLine(final StringBuilder javadoc, final String indent, final String lineSeparator) {
+    private void addEmptyLine(final StringBuilder javadoc, final String indent, final String lineSeparator, final boolean markdown) {
         javadoc.append(indent);
-        javadoc.append(" *");
+        javadoc.append(markdown ? "///" : " *");
         javadoc.append(lineSeparator);
     }
 }

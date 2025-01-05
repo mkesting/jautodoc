@@ -2,7 +2,7 @@
 <feature
       id="net.sf.jautodoc.feature"
       label="JAutodoc"
-      version="1.16.0.qualifier"
+      version="1.17.0.qualifier"
       provider-name="Martin Kesting"
       plugin="net.sf.jautodoc">
 
@@ -11,7 +11,7 @@
    </description>
 
    <copyright>
-      Copyright (c) 2024, Martin Kesting, All rights reserved.
+      Copyright (c) 2025, Martin Kesting, All rights reserved.
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">

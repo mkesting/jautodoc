@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -132,6 +132,9 @@ public class OptionsDialog extends Dialog {
         ob.keepButton.setSelection(config.isKeepExistingJavadoc());
         ob.replaceButton.setSelection(config.isReplaceExistingJavadoc());
 
+        ob.useMarkdownButton.setSelection(config.isUseMarkdown());
+        ob.switchDocStyleButton.setSelection(config.isSwitchDocStyle());
+
         ob.publicButton.setSelection(config.isIncludePublic());
         ob.protectedButton.setSelection(config.isIncludeProtected());
         ob.packageButton.setSelection(config.isIncludePackage());
@@ -195,6 +198,9 @@ public class OptionsDialog extends Dialog {
             config.setCompleteExistingJavadoc(ob.completeButton.getSelection());
             config.setKeepExistingJavadoc(ob.keepButton.getSelection());
             config.setReplaceExistingJavadoc(ob.replaceButton.getSelection());
+
+            config.setUseMarkdown(ob.useMarkdownButton.getSelection());
+            config.setSwitchDocStyle(ob.switchDocStyleButton.getSelection());
 
             config.setVisibilityPublic(ob.publicButton.getSelection());
             config.setVisibilityProtected(ob.protectedButton.getSelection());

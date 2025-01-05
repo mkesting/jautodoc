@@ -1,12 +1,11 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
  * for details.
  *******************************************************************/
 package net.sf.jautodoc.preferences;
-
 
 /**
  * Constants for this Plugin.
@@ -58,6 +57,8 @@ public interface Constants {
     public static final String USE_FORMATTER       = "use_internal_formatter";
     public static final String GET_SET_FROM_FIELD  = "get_set_from_field";
     public static final String INCLUDE_SUBPACKAGES = "include_subpackages";
+    public static final String USE_MARKDOWN        = "use_markdown";
+    public static final String SWITCH_DOC_STYLE    = "switch_doc_style";
 
     public static final String GET_SET_FROM_FIELD_FIRST   = "get_set_from_field_first";
     public static final String GET_SET_FROM_FIELD_REPLACE = "get_set_from_field_replace";
@@ -105,6 +106,8 @@ public interface Constants {
     public static final boolean DEFAULT_USE_FORMATTER       = false;
     public static final boolean DEFAULT_GET_SET_FROM_FIELD  = false;
     public static final boolean DEFAULT_INCLUDE_SUBPACKAGES = false;
+    public static final boolean DEFAULT_USE_MARKDOWN        = false;
+    public static final boolean DEFAULT_SWITCH_DOC_STYLE    = false;
 
     public static final boolean DEFAULT_GET_SET_FROM_FIELD_FIRST   = true;
     public static final boolean DEFAULT_GET_SET_FROM_FIELD_REPLACE = false;
@@ -178,6 +181,10 @@ public interface Constants {
     public static final String LABEL_MODE_COMPLETE = PreferenceMessages.getString("preferences.label.mode.complete"); //$NON-NLS-1$
     public static final String LABEL_MODE_KEEP     = PreferenceMessages.getString("preferences.label.mode.keep"); //$NON-NLS-1$
     public static final String LABEL_MODE_REPLACE  = PreferenceMessages.getString("preferences.label.mode.replace"); //$NON-NLS-1$
+
+    public static final String LABEL_MARKDOWN        = PreferenceMessages.getString("preferences.label.markdown"); //$NON-NLS-1$
+    public static final String LABEL_MARKDOWN_USE    = PreferenceMessages.getString("preferences.label.markdown.use"); //$NON-NLS-1$
+    public static final String LABEL_MARKDOWN_SWITCH = PreferenceMessages.getString("preferences.label.markdown.switch"); //$NON-NLS-1$
 
     public static final String LABEL_VISIBILITY           = PreferenceMessages.getString("preferences.label.visibility"); //$NON-NLS-1$
     public static final String LABEL_VISIBILITY_PUBLIC    = PreferenceMessages.getString("preferences.label.visibility.public"); //$NON-NLS-1$
