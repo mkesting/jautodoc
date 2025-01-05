@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -71,7 +71,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-
 
 /**
  * Dialog for editing Javadoc templates.
@@ -428,6 +427,10 @@ public class EditTemplateDialog extends TitleAreaDialog implements
             return null;
         }
 
+        if (!evaluatedText.endsWith(view.templateViewer.getTextWidget().getLineDelimiter())) {
+            evaluatedText += view.templateViewer.getTextWidget().getLineDelimiter();
+        }
+
         return validateComment(evaluatedText) ? evaluatedText : null;
     }
 
@@ -437,7 +440,7 @@ public class EditTemplateDialog extends TitleAreaDialog implements
 
         try {
             int token = commentScanner.getNextToken();
-            if (Utils.isJavadocComment(token)) {
+            if (Utils.isJavadocComment(token) || Utils.isMarkdownComment(token)) {
                 token = commentScanner.getNextToken();
                 if (token == ITerminalSymbols.TokenNameEOF) {
                     return true;

@@ -1,12 +1,11 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
  * for details.
  *******************************************************************/
 package net.sf.jautodoc.preferences;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +52,6 @@ import net.sf.jautodoc.JAutodocPlugin;
 import net.sf.jautodoc.preferences.replacements.ReplacementBlock;
 import net.sf.jautodoc.preferences.templates.TemplatePreferencePage;
 
-
 /**
  * Main preferences and project property page.
  */
@@ -78,7 +76,7 @@ public class MainPreferencePage extends PreferencePage implements
 
     private boolean enableScopeLink = true;
 
-    /** Hack for Eclipse 4.5 RC3 bug. */ 
+    /** Hack for Eclipse 4.5 RC3 bug. */
     private GridLayout contributeButtonsLayout;
 
     /**
@@ -387,6 +385,9 @@ public class MainPreferencePage extends PreferencePage implements
             ob.replaceButton.setSelection(true);
         }
 
+        ob.useMarkdownButton.setSelection(prefStore.getBoolean(USE_MARKDOWN));
+        ob.switchDocStyleButton.setSelection(prefStore.getBoolean(SWITCH_DOC_STYLE));
+
         ob.publicButton.setSelection(prefStore.getBoolean(VISIBILITY_PUBLIC));
         ob.protectedButton.setSelection(prefStore.getBoolean(VISIBILITY_PROTECTED));
         ob.packageButton.setSelection(prefStore.getBoolean(VISIBILITY_PACKAGE));
@@ -511,6 +512,10 @@ public class MainPreferencePage extends PreferencePage implements
             ob.replaceButton.setSelection(true);
         }
 
+        // markdown
+        ob.useMarkdownButton.setSelection(prefStore.getDefaultBoolean(USE_MARKDOWN));
+        ob.switchDocStyleButton.setSelection(prefStore.getDefaultBoolean(SWITCH_DOC_STYLE));
+
         // visibility
         ob.publicButton.setSelection(prefStore.getDefaultBoolean(VISIBILITY_PUBLIC));
         ob.protectedButton.setSelection(prefStore.getDefaultBoolean(VISIBILITY_PROTECTED));
@@ -583,6 +588,9 @@ public class MainPreferencePage extends PreferencePage implements
         else if (ob.replaceButton.getSelection()) {
             prefStore.setValue(MODE, MODE_REPLACE);
         }
+
+        prefStore.setValue(USE_MARKDOWN,     ob.useMarkdownButton.getSelection());
+        prefStore.setValue(SWITCH_DOC_STYLE, ob.switchDocStyleButton.getSelection());
 
         prefStore.setValue(VISIBILITY_PUBLIC,    ob.publicButton.getSelection());
         prefStore.setValue(VISIBILITY_PROTECTED, ob.protectedButton.getSelection());

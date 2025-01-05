@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -86,8 +86,8 @@ public class JavadocTag {
         return comments;
     }
 
-    public void addToJavadocString(final StringBuilder javadoc, final String indent, final String lineSeparator) {
-        startNewLine(javadoc, indent);
+    public void addToJavadocString(final StringBuilder javadoc, final String indent, final String lineSeparator, final boolean markdown) {
+        startNewLine(javadoc, indent, markdown);
         javadoc.append(type).append(" ");
         if (name != null && name.length() > 0) {
             javadoc.append(name).append(" ");
@@ -98,7 +98,7 @@ public class JavadocTag {
         javadoc.append(lineSeparator);
 
         for (int i = 1; i < comments.size(); ++i) {
-            startNewLine(javadoc, indent);
+            startNewLine(javadoc, indent, markdown);
             javadoc.append(comments.get(i));
             javadoc.append(lineSeparator);
         }
@@ -118,9 +118,9 @@ public class JavadocTag {
         return builder.toString();
     }
 
-    private void startNewLine(final StringBuilder javadoc, final String indent) {
+    private void startNewLine(final StringBuilder javadoc, final String indent, final boolean markdown) {
         javadoc.append(indent);
-        javadoc.append(" * ");
+        javadoc.append(markdown ? "/// ": " * ");
     }
 
     // ------------------------------------------------------------------------

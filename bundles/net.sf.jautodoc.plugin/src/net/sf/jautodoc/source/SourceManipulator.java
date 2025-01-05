@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2023, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -31,7 +31,6 @@ import org.eclipse.text.edits.InsertEdit;
 import org.eclipse.text.edits.MultiTextEdit;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.text.edits.TextEdit;
-
 
 /**
  * Class for source code manipulation.
@@ -182,6 +181,10 @@ public class SourceManipulator extends AbstractSourceProcessor {
             }
         }
 
+        if (jdi.isEmpty() || config.isSwitchDocStyle()) {
+            jdi.setMarkdown(config.isUseMarkdown());
+        }
+
         // create/complete javadoc
         boolean inherited = false;
         String newJavadoc = "";
@@ -228,7 +231,7 @@ public class SourceManipulator extends AbstractSourceProcessor {
         }
 
         // keep existing format
-        if (SourceUtils.isSameComment(existingJavadoc, newJavadoc)) {
+        if (SourceUtils.isSameComment(existingJavadoc, newJavadoc, config.isSwitchDocStyle())) {
             return;
         }
 
@@ -283,7 +286,7 @@ public class SourceManipulator extends AbstractSourceProcessor {
             newHeader += lineDelimiter;
         }
 
-        if (!SourceUtils.isSameComment(existingHeader, newHeader)) {
+        if (!SourceUtils.isSameComment(existingHeader, newHeader, false)) {
             doReplacement(commentRange, newHeader, existingHeader.length() == 0 ? "Add file header"
                     : "Replace existing file header");
         }

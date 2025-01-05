@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -14,7 +14,6 @@ import net.sf.jautodoc.JAutodocPlugin;
 import net.sf.jautodoc.preferences.replacements.Replacement;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
-
 
 /**
  * Initialize preference store with default values.
@@ -46,6 +45,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer impleme
         prefStore.setDefault(USE_FORMATTER,        DEFAULT_USE_FORMATTER);
         prefStore.setDefault(GET_SET_FROM_FIELD,   DEFAULT_GET_SET_FROM_FIELD);
         prefStore.setDefault(INCLUDE_SUBPACKAGES,  DEFAULT_INCLUDE_SUBPACKAGES);
+        prefStore.setDefault(USE_MARKDOWN,         DEFAULT_USE_MARKDOWN);
+        prefStore.setDefault(SWITCH_DOC_STYLE,     DEFAULT_SWITCH_DOC_STYLE);
 
         prefStore.setDefault(GET_SET_FROM_FIELD_FIRST,   DEFAULT_GET_SET_FROM_FIELD_FIRST);
         prefStore.setDefault(GET_SET_FROM_FIELD_REPLACE, DEFAULT_GET_SET_FROM_FIELD_REPLACE);

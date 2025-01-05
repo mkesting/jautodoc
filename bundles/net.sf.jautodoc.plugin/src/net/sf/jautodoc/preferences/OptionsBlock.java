@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -30,7 +30,6 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 
-
 /**
  * Creates a composite for JAutodoc options.
  */
@@ -55,6 +54,9 @@ public class OptionsBlock {
     protected Button filterGetterSetterButton;
     protected Button filterExcludeGetterSetterButton;
     protected Button filterExcludeOverridingButton;
+
+    protected Button useMarkdownButton;
+    protected Button switchDocStyleButton;
 
     protected Button todoButton;
     protected Button dummyDocButton;
@@ -112,8 +114,20 @@ public class OptionsBlock {
         topComposite.setLayout(topLayout);
         topComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+        // top left composite
+        Composite topLeftComposite = new Composite(topComposite, SWT.NONE);
+        GridLayout topLeftLayout = new GridLayout();
+        topLeftLayout.numColumns   = 1;
+        topLeftLayout.marginWidth  = 0;
+        topLeftLayout.marginHeight = 0;
+        topLeftComposite.setLayout(topLeftLayout);
+        topLeftComposite.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+
         // modes
-        createModeGroup(topComposite);
+        createModeGroup(topLeftComposite);
+
+        // markdown
+        createMarkdownGroup(topLeftComposite);
 
         // visibility
         createVisibilityGroup(topComposite);
@@ -163,8 +177,6 @@ public class OptionsBlock {
     protected void createModeGroup(Composite parent) {
         Group modeGroup = new Group(parent, SWT.NONE);
         GridLayout modeLayout = new GridLayout();
-        modeLayout.marginTop       = 12;
-        modeLayout.verticalSpacing = 20;
         modeGroup.setLayout(modeLayout);
         modeGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
         modeGroup.setText(Constants.LABEL_MODE);
@@ -177,6 +189,20 @@ public class OptionsBlock {
 
         replaceButton = new Button(modeGroup, SWT.RADIO);
         replaceButton.setText(Constants.LABEL_MODE_REPLACE);
+    }
+
+    protected void createMarkdownGroup(Composite parent) {
+        Group markdownGroup = new Group(parent, SWT.NONE);
+        GridLayout markdownLayout = new GridLayout();
+        markdownGroup.setLayout(markdownLayout);
+        markdownGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
+        markdownGroup.setText(Constants.LABEL_MARKDOWN);
+
+        useMarkdownButton = new Button(markdownGroup, SWT.CHECK);
+        useMarkdownButton.setText(Constants.LABEL_MARKDOWN_USE);
+
+        switchDocStyleButton = new Button(markdownGroup, SWT.CHECK);
+        switchDocStyleButton.setText(Constants.LABEL_MARKDOWN_SWITCH);
     }
 
     protected void createVisibilityGroup(Composite parent) {

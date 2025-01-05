@@ -1,5 +1,5 @@
 /*******************************************************************
- * Copyright (c) 2006 - 2019, Martin Kesting, All rights reserved.
+ * Copyright (c) 2006 - 2025, Martin Kesting, All rights reserved.
  *
  * This software is licenced under the Eclipse Public License v1.0,
  * see the LICENSE file or http://www.eclipse.org/legal/epl-v10.html
@@ -20,7 +20,6 @@ import net.sf.jautodoc.preferences.Constants;
 import net.sf.jautodoc.utils.StringUtils;
 import net.sf.jautodoc.utils.Utils;
 
-
 /**
  * Parses a given Javadoc string and provides the parsed informations.
  */
@@ -31,6 +30,8 @@ public class JavadocInfo {
     }
 
     private State state = State.STATE_TEXT;
+
+    private boolean markdown;
 
     private String type = "";
     private String name = "";
@@ -44,6 +45,14 @@ public class JavadocInfo {
     private final Map<String, JavadocTag> paramDoc  = new LinkedHashMap<String, JavadocTag>();
     private final Map<String, JavadocTag> throwsDoc = new LinkedHashMap<String, JavadocTag>();
 
+
+    public boolean isMarkdown() {
+        return markdown;
+    }
+
+    public void setMarkdown(boolean markdown) {
+        this.markdown = markdown;
+    }
 
     /**
      * Get all tag comments.
@@ -191,11 +200,13 @@ public class JavadocInfo {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public void parseJavadoc(final String buffer) throws IOException {
-        final String input = buffer.replaceFirst("/\\*\\*", "")       // remove /**
-                                   .replaceFirst("\\s*\\*/\\s*", "")  // remove */
-                                   .replaceAll  ("\\n\\s*\\* ?", "\n"); // remove starting *
+        final String input = buffer.replaceFirst("/\\*\\*[\\t ]*", "")  // remove /**
+                                   .replaceFirst("\\s*\\*/\\s*",   "")  // remove */
+                                   .replaceAll  ("\\n\\s*\\* ?", "\n")  // remove starting *
+                                   .replaceAll  ("[\\t ]*/// ?",   ""); // remove starting ///
         String line = null;
         state = State.STATE_TEXT;
+        markdown = buffer.startsWith("///");
 
         final BufferedReader br = new BufferedReader(new StringReader(input));
         while ((line = br.readLine()) != null) {
