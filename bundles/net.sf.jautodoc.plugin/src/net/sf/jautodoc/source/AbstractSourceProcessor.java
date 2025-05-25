@@ -9,6 +9,7 @@ package net.sf.jautodoc.source;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import net.sf.jautodoc.preferences.Configuration;
 import net.sf.jautodoc.preferences.ConfigurationManager;
@@ -24,6 +25,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IMember;
 import org.eclipse.jdt.core.IType;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.ToolFactory;
 import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jface.text.IDocument;
@@ -34,6 +36,8 @@ import org.eclipse.jface.text.IDocument;
 public abstract class AbstractSourceProcessor {
     protected IDocument document;
     protected IScanner commentScanner;
+
+    protected boolean markdownEnabled;
 
     protected final ICompilationUnit compUnit;
     protected final Configuration  config;
@@ -74,7 +78,13 @@ public abstract class AbstractSourceProcessor {
         try {
             document = manager.getTextFileBuffer(path, LocationKind.NORMALIZE).getDocument();
 
-            commentScanner = ToolFactory.createScanner(true, false, false, true);
+            String sourceLevel = getSourceLevel();
+            String complianceLevel = getComplianceLevel();
+
+            markdownEnabled = JavaCore.getAllVersions().contains("23")
+                    && JavaCore.getAllVersions().indexOf("23") <= JavaCore.getAllVersions().indexOf(complianceLevel);
+
+            commentScanner = ToolFactory.createScanner(true, false, true, sourceLevel, complianceLevel);
             commentScanner.setSource(document.get().toCharArray());
 
             monitor.beginTask(getTaskName(), members.length + 5);
@@ -96,6 +106,18 @@ public abstract class AbstractSourceProcessor {
         } finally {
             manager.disconnect(path, LocationKind.NORMALIZE, null);
         }
+    }
+
+    private String getSourceLevel() {
+        return Optional.ofNullable(compUnit.getJavaProject())
+                .map(jp -> jp.getOption(JavaCore.COMPILER_SOURCE, true))
+                .orElse(JavaCore.latestSupportedJavaVersion());
+    }
+
+    private String getComplianceLevel() {
+        return Optional.ofNullable(compUnit.getJavaProject())
+                .map(jp -> jp.getOption(JavaCore.COMPILER_COMPLIANCE, true))
+                .orElse(JavaCore.latestSupportedJavaVersion());
     }
 
     protected abstract void startProcessing() throws Exception;

@@ -5,7 +5,7 @@
 
 	<groupId>net.sf.jautodoc</groupId>
 	<artifactId>net.sf.jautodoc.configuration</artifactId>
-	<version>1.17.0</version>
+	<version>1.17.1</version>
 	<packaging>pom</packaging>
 
 	<properties>

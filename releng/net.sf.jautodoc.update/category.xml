@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/net.sf.jautodoc.feature_1.17.0.qualifier.jar" id="net.sf.jautodoc.feature" version="1.17.0.qualifier">
+   <feature url="features/net.sf.jautodoc.feature_1.17.1.qualifier.jar" id="net.sf.jautodoc.feature" version="1.17.1.qualifier">
       <category name="JAutodoc"/>
    </feature>
    <category-def name="JAutodoc" label="JAutodoc"/>

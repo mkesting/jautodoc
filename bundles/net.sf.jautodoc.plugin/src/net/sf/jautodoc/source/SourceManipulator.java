@@ -182,7 +182,7 @@ public class SourceManipulator extends AbstractSourceProcessor {
         }
 
         if (jdi.isEmpty() || config.isSwitchDocStyle()) {
-            jdi.setMarkdown(config.isUseMarkdown());
+            jdi.setMarkdown(config.isUseMarkdown() && markdownEnabled);
         }
 
         // create/complete javadoc

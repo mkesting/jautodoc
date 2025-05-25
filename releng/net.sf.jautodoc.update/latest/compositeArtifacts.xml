@@ -10,5 +10,6 @@
     <child location='../1.15.0'/>
     <child location='../1.16.0'/>
     <child location='../1.17.0'/>
+    <child location='../1.17.1'/>
   </children>
 </repository>

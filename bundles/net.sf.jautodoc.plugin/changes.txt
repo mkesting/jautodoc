@@ -1,5 +1,11 @@
 Changes for JAutodoc
 
+* 2025-05-25 Version 1.17.1
+      o Fix for Markdown and project specific compiler settings
+
+* 2025-01-05 Version 1.17.0
+      o Support for Markdown (Java 23 required)
+
 * 2023-12-29 Version 1.16.0
       o Support for records
       o Ignore Lombok generated code

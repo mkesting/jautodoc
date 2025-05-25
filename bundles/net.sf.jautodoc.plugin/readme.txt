@@ -1,1 +1,1 @@
-For help see http://jautodoc.sourceforge.net
+For help see https://github.com/mkesting/jautodoc/wiki
